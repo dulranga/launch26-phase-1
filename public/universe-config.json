@@ -2,7 +2,7 @@
     "universe_metadata": {
         "system_name": "Zeta-26",
         "speed_of_light_kms": 300000.0,
-        "max_void_hop_distance_km": 400.0,
+        "max_void_hop_distance_km": 50000000.0,
         "coordinate_scale_unit_km": 100000.0,
         "tower_processing_delay_ms": 7.0,
         "fiber_speed_fraction": 0.67
