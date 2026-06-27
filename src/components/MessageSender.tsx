@@ -1,5 +1,6 @@
 import { useAppStore } from "../store";
 import { findRoute } from "../engine/routing";
+import SciFiCard from "./sci-fi/Card";
 
 export default function MessageSender() {
   const universeConfig = useAppStore((state) => state.universeConfig);
@@ -42,7 +43,7 @@ export default function MessageSender() {
   );
 
   return (
-    <div className="bg-neutral-900/50 backdrop-blur-md p-6 rounded-xl border border-white/5 flex flex-col gap-4">
+    <SciFiCard className="flex flex-col gap-4">
       <h2 className="text-cyan-400 font-bold uppercase tracking-wider text-sm border-b border-white/5 pb-2">
         Transmission Uplink
       </h2>
@@ -105,6 +106,6 @@ export default function MessageSender() {
       >
         [ Initialize Transmission ]
       </button>
-    </div>
+    </SciFiCard>
   );
 }
