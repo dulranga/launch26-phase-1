@@ -1,0 +1,62 @@
+{
+    "universe_metadata": {
+        "system_name": "Mesh-Net",
+        "speed_of_light_kms": 300000.0,
+        "max_void_hop_distance_km": 400.0,
+        "coordinate_scale_unit_km": 100000.0,
+        "tower_processing_delay_ms": 7.0,
+        "fiber_speed_fraction": 0.67
+    },
+    "nodes": [
+        {
+            "id": "Alpha",
+            "codex": 8,
+            "x": 0,
+            "y": 0,
+            "radius_km": 5000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 100,
+            "refraction_index": 1.02
+        },
+        {
+            "id": "Beta",
+            "codex": 5,
+            "x": 150,
+            "y": 150,
+            "radius_km": 5000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 100,
+            "refraction_index": 1.02
+        },
+        {
+            "id": "Gamma",
+            "codex": 16,
+            "x": 150,
+            "y": -150,
+            "radius_km": 5000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 100,
+            "refraction_index": 1.02
+        },
+        {
+            "id": "Delta",
+            "codex": 14,
+            "x": 300,
+            "y": 0,
+            "radius_km": 5000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 100,
+            "refraction_index": 1.02
+        },
+        {
+            "id": "Omega",
+            "codex": 12,
+            "x": 450,
+            "y": 0,
+            "radius_km": 5000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 100,
+            "refraction_index": 1.02
+        }
+    ]
+}

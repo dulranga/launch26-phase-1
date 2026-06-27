@@ -1,0 +1,62 @@
+{
+    "universe_metadata": {
+        "system_name": "Relay-Chain",
+        "speed_of_light_kms": 300000.0,
+        "max_void_hop_distance_km": 500.0,
+        "coordinate_scale_unit_km": 100000.0,
+        "tower_processing_delay_ms": 7.0,
+        "fiber_speed_fraction": 0.67
+    },
+    "nodes": [
+        {
+            "id": "A",
+            "codex": 8,
+            "x": 0,
+            "y": 0,
+            "radius_km": 5000,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 50,
+            "refraction_index": 1.01
+        },
+        {
+            "id": "B",
+            "codex": 5,
+            "x": 450,
+            "y": 50,
+            "radius_km": 5000,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 50,
+            "refraction_index": 1.01
+        },
+        {
+            "id": "C",
+            "codex": 12,
+            "x": 900,
+            "y": 0,
+            "radius_km": 5000,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 50,
+            "refraction_index": 1.01
+        },
+        {
+            "id": "D",
+            "codex": 16,
+            "x": 1350,
+            "y": 50,
+            "radius_km": 5000,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 50,
+            "refraction_index": 1.01
+        },
+        {
+            "id": "E",
+            "codex": 14,
+            "x": 1800,
+            "y": 0,
+            "radius_km": 5000,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 50,
+            "refraction_index": 1.01
+        }
+    ]
+}

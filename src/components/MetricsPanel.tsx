@@ -66,39 +66,50 @@ export default function MetricsPanel() {
         {activeRoute.hops.map((hop, i) => (
           <div
             key={i}
-            className="bg-neutral-950 border border-white/5 rounded p-3 text-xs font-mono flex-shrink-0"
+            className="border border-cyan-900/40 bg-cyan-950/10 flex-shrink-0 overflow-hidden"
           >
-            <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-2 text-cyan-200 font-bold uppercase tracking-wider">
-              <span>
-                {hop.source} → {hop.target}
+            {/* Hop header */}
+            <div className="flex justify-between items-center px-3 py-2 bg-cyan-900/20 border-b border-cyan-900/40">
+              <span className="text-cyan-200 font-bold text-xs uppercase tracking-widest font-mono">
+                HOP {i + 1} &nbsp; {hop.source}{" "}
+                <span className="text-cyan-500">→</span> {hop.target}
               </span>
-              <span>{hop.totalDelay.toFixed(2)} ms</span>
+              <span className="text-white font-bold text-xs font-mono tabular-nums">
+                {hop.totalDelay.toFixed(2)}{" "}
+                <span className="text-cyan-500 font-normal">ms</span>
+              </span>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-[10px] text-neutral-400">
-              <div className="flex justify-between">
-                <span>Fiber:</span>
-                <span className="text-cyan-500">
-                  {hop.fiberDelay.toFixed(2)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Tower:</span>
-                <span className="text-cyan-500">
-                  {hop.towerDelay.toFixed(2)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Atmos:</span>
-                <span className="text-cyan-500">
-                  {hop.atmosphereDelay.toFixed(2)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Void:</span>
-                <span className="text-cyan-500">
-                  {hop.voidDelay.toFixed(2)}
-                </span>
-              </div>
+
+            {/* Delay rows */}
+            <div className="flex flex-col divide-y divide-white/5 px-3 py-1">
+              {[
+                { label: "Fiber", value: hop.fiberDelay, color: "bg-cyan-400" },
+                { label: "Tower", value: hop.towerDelay, color: "bg-sky-400" },
+                {
+                  label: "Atmosphere",
+                  value: hop.atmosphereDelay,
+                  color: "bg-violet-400",
+                },
+                { label: "Void", value: hop.voidDelay, color: "bg-indigo-400" },
+              ].map(({ label, value, color }) => {
+                const pct = Math.min(100, (value / hop.totalDelay) * 100);
+                return (
+                  <div key={label} className="flex items-center gap-3 py-1.5">
+                    <span className="text-[10px] text-neutral-400 uppercase tracking-wider font-mono w-20 shrink-0">
+                      {label}
+                    </span>
+                    <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${color} rounded-full opacity-70`}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                    <span className="text-cyan-300 text-[11px] font-mono tabular-nums w-14 text-right shrink-0">
+                      {value.toFixed(2)} ms
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
