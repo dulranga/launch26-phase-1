@@ -72,12 +72,14 @@ Each node needs these fields:
 - `atmosphere_thickness_km`
 - `refraction_index`
 
-## Adding a new universe file
+## Adding a New Universe File
 
-1. There is a default config file in `public/universe-config.json`.
-2. Make sure the JSON matches the schema above.
-3. Refresh the app, or use the Config Import panel to upload a JSON file from your machine.
-4. The loaded config is saved in browser storage and will be used.
+1. Ensure that the configuration file matches the schema described above.
+2. Upload the configuration file through the website.
+3. The uploaded configuration will be saved in the browser's local storage and used automatically.
+
+**Note:** A default configuration file is available at `public/universe-config.json`.
+
 
 ## Notes
 
