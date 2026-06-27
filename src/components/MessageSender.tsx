@@ -48,17 +48,17 @@ export default function MessageSender() {
         Transmission Uplink
       </h2>
 
-      <div className="flex gap-4">
-        <div className="flex-1 flex flex-col gap-1">
-          <label className="text-[10px] text-cyan-500/70 uppercase font-bold tracking-wider">
+      <div className="flex gap-3">
+        <div className="flex-1 min-w-0 flex flex-col gap-1">
+          <label className="text-[9px] text-cyan-500/70 uppercase font-bold tracking-wider leading-none">
             Source
           </label>
           <select
             value={sourcePlanet || ""}
             onChange={(e) => setSourcePlanet(e.target.value)}
-            className="bg-neutral-950 border border-white/10 rounded p-2 text-sm text-cyan-100 focus:outline-none focus:border-cyan-500/50"
+            className="w-full min-w-0 bg-neutral-950 border border-white/10 rounded px-2 py-1.5 text-[11px] leading-none font-mono text-cyan-100 focus:outline-none focus:border-cyan-500/50"
           >
-            <option value="">Select Origin...</option>
+            <option value="">Source</option>
             {availablePlanets.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.id}
@@ -67,16 +67,16 @@ export default function MessageSender() {
           </select>
         </div>
 
-        <div className="flex-1 flex flex-col gap-1">
-          <label className="text-[10px] text-cyan-500/70 uppercase font-bold tracking-wider">
+        <div className="flex-1 min-w-0 flex flex-col gap-1">
+          <label className="text-[9px] text-cyan-500/70 uppercase font-bold tracking-wider leading-none">
             Destination
           </label>
           <select
             value={targetPlanet || ""}
             onChange={(e) => setTargetPlanet(e.target.value)}
-            className="bg-neutral-950 border border-white/10 rounded p-2 text-sm text-cyan-100 focus:outline-none focus:border-cyan-500/50"
+            className="w-full min-w-0 bg-neutral-950 border border-white/10 rounded px-2 py-1.5 text-[11px] leading-none font-mono text-cyan-100 focus:outline-none focus:border-cyan-500/50"
           >
-            <option value="">Select Target...</option>
+            <option value="">Destination</option>
             {availablePlanets.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.id}
@@ -95,7 +95,7 @@ export default function MessageSender() {
           onChange={(e) => setMessagePayload(e.target.value)}
           placeholder="ENTER MESSAGE..."
           rows={3}
-          className="bg-neutral-950 border border-white/10 rounded p-2 text-sm text-cyan-100 font-mono focus:outline-none focus:border-cyan-500/50 resize-none"
+          className="bg-neutral-950 border border-white/10 rounded p-2 text-sm text-cyan-100 font-mono placeholder:text-[11px] placeholder:tracking-wider focus:outline-none focus:border-cyan-500/50 resize-none"
         />
       </div>
 
