@@ -23,7 +23,7 @@ export default function PlanetNode({ data }: PlanetNodeProps) {
           isOffline ? "bg-red-900" : "bg-cyan-400"
         } shadow-[0_0_8px_rgba(34,211,238,0.8)]`}
         style={{
-          top: "-12px",
+          top: "calc(50% - 12px)",
           left: "calc(50% - 2px)",
           transformOrigin: "50% 100%",
           transform: `rotate(${angle}deg) translateY(-24px)`,

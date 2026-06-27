@@ -23,14 +23,10 @@ export default function UniverseViewer() {
   const nodes: Node[] = useMemo(() => {
     if (!universeConfig) return [];
 
-    // Calculate a bounding box or max coordinates to normalize positioning if needed,
-    // but the coordinate_scale_unit_km tells us how to scale x,y.
-    const scale = universeConfig.universe_metadata.coordinate_scale_unit_km;
-
     return universeConfig.nodes.map((node) => ({
       id: node.id,
       type: "planet",
-      position: { x: (node.x / scale) * 200, y: (node.y / scale) * 200 }, // Scaled for UI
+      position: { x: node.x * 5, y: node.y * 5 }, // Scaled for UI spacing
       data: { node },
       draggable: true,
     }));
@@ -107,6 +103,8 @@ export default function UniverseViewer() {
         edges={edges}
         nodeTypes={nodeTypes}
         fitView
+        minZoom={0.01}
+        maxZoom={5}
         proOptions={{ hideAttribution: true }}
       >
         <Background color="#1e3a8a" gap={20} size={1} />

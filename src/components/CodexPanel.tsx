@@ -6,65 +6,100 @@ export default function CodexPanel() {
   const activeRoute = useAppStore((state) => state.activeRoute);
   const messagePayload = useAppStore((state) => state.messagePayload);
   const universeConfig = useAppStore((state) => state.universeConfig);
-  const isAnimating = useAppStore((state) => state.isAnimating);
 
-  const conversionData = useMemo(() => {
-    if (activeRoute.status !== 'success' || !universeConfig || !messagePayload) return null;
+  const phases = useMemo(() => {
+    if (activeRoute.status !== 'success' || !universeConfig || !messagePayload || activeRoute.path.length < 2) return null;
     
-    const targetNodeId = activeRoute.path[activeRoute.path.length - 1];
-    const targetNode = universeConfig.nodes.find(n => n.id === targetNodeId);
-    if (!targetNode) return null;
+    const result = [];
+    
+    // Generate hop phases
+    for (let i = 0; i < activeRoute.path.length - 1; i++) {
+      const sourceId = activeRoute.path[i];
+      const targetId = activeRoute.path[i + 1];
+      const sourceNode = universeConfig.nodes.find(n => n.id === sourceId)!;
+      const targetNode = universeConfig.nodes.find(n => n.id === targetId)!;
+      
+      const conversions = convertPayloadToCodex(messagePayload, targetNode.codex);
+      const asciiArray = conversions.map(c => c.ascii).join(', ');
+      const convertedArray = conversions.map(c => c.converted).join(', ');
 
+      result.push({
+        phaseNum: i + 1,
+        type: i === 0 ? 'Origin' : 'Relay',
+        sourceNode,
+        targetNode,
+        asciiArray,
+        convertedArray,
+        conversions
+      });
+    }
+
+    const finalNode = universeConfig.nodes.find(n => n.id === activeRoute.path[activeRoute.path.length - 1])!;
+    
     return {
-      targetId: targetNode.id,
-      codex: targetNode.codex,
-      conversions: convertPayloadToCodex(messagePayload, targetNode.codex),
+      hops: result,
+      finalNode,
+      payload: messagePayload
     };
   }, [activeRoute, messagePayload, universeConfig]);
 
-  if (!conversionData) return null;
+  if (!phases) return null;
 
   return (
-    <div className="bg-neutral-900/50 backdrop-blur-md p-6 rounded-xl border border-white/5 flex flex-col gap-4 mt-4">
-      <h2 className="text-cyan-400 font-bold uppercase tracking-wider text-sm border-b border-white/5 pb-2 flex justify-between items-center">
-        <span>Codex Conversion</span>
-        <span className="text-[10px] bg-cyan-900/40 text-cyan-200 px-2 py-1 rounded">Base {conversionData.codex}</span>
+    <div className="bg-neutral-900/50 backdrop-blur-md p-6 rounded-xl border border-white/5 flex flex-col gap-4 mt-4 h-full max-h-[600px] overflow-y-auto custom-scrollbar">
+      <h2 className="text-cyan-400 font-bold uppercase tracking-wider text-sm border-b border-white/5 pb-2 sticky top-0 bg-neutral-900/90 backdrop-blur-md z-10">
+        Multi-Hop Transmission Log
       </h2>
 
-      <div className="text-xs text-neutral-400 mb-2 font-mono">
-        Translating Payload for {conversionData.targetId} Local Decoding...
-      </div>
-
-      <div className="flex flex-col gap-3 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
-        {conversionData.conversions.map((charData, i) => (
-          <div key={i} className="flex flex-col gap-1">
-            <div className="flex items-center gap-2">
-              {/* Original Char */}
-              <div className="w-8 h-8 flex items-center justify-center bg-neutral-950 border border-white/10 rounded text-cyan-100 font-bold">
-                {charData.char}
-              </div>
-              <span className="text-cyan-500/50">→</span>
-              {/* ASCII */}
-              <div className="flex-1 px-3 py-1 bg-neutral-800 border border-white/5 rounded text-neutral-400 font-mono text-xs flex items-center justify-between">
-                <span>ASCII (Base 10)</span>
-                <span>{charData.ascii}</span>
-              </div>
-            </div>
+      <div className="flex flex-col gap-6 text-sm">
+        {phases.hops.map((hop, index) => (
+          <div key={index} className="flex flex-col gap-2 bg-neutral-950/50 p-4 rounded border border-white/5">
+            <h3 className="text-cyan-200 font-bold uppercase tracking-widest border-b border-white/5 pb-1">
+              Phase {hop.phaseNum}: {hop.type} at {hop.sourceNode.id} (Base {hop.sourceNode.codex})
+            </h3>
             
-            <div className="flex items-center gap-2 ml-10">
-              <span className="text-cyan-500/50 text-xl font-bold">↳</span>
-              {/* Target Codex */}
-              <div className={`flex-1 px-3 py-2 border rounded font-mono text-sm flex items-center justify-between transition-all duration-500 ${
-                isAnimating 
-                  ? 'bg-cyan-950 border-cyan-500/50 text-cyan-200 animate-pulse shadow-[0_0_10px_rgba(34,211,238,0.2)]'
-                  : 'bg-neutral-950 border-white/10 text-cyan-500/80'
-              }`}>
-                <span className="text-[10px] uppercase text-cyan-500/50">Base {conversionData.codex}</span>
-                <span className="font-bold tracking-widest">{charData.converted}</span>
-              </div>
-            </div>
+            {hop.type === 'Relay' && (
+              <p className="text-neutral-400">
+                <strong className="text-cyan-500">Void Arrival & Local Decoding:</strong> {hop.sourceNode.id} receives the raw binary stream and reads it out as Base {hop.sourceNode.codex} values, decoding it back into standard ASCII to route between local towers.
+              </p>
+            )}
+
+            <p className="text-neutral-400">
+              <strong className="text-cyan-500">Internal Representation:</strong> The raw payload <span className="text-white">"{phases.payload}"</span> is represented as ASCII bytes inside {hop.sourceNode.id}'s routing system:
+              <br/>
+              <code className="text-cyan-100 bg-neutral-900 px-2 py-1 rounded mt-1 block">[{hop.asciiArray}]</code>
+            </p>
+
+            <p className="text-neutral-400 mt-2">
+              <strong className="text-cyan-500">Next Hop Codex (Base {hop.targetNode.codex}):</strong> Before hitting the void, {hop.sourceNode.id} converts the data into the dialect of the next destination, {hop.targetNode.id}. The entire payload becomes:
+              <br/>
+              <code className="text-cyan-300 bg-neutral-900 px-2 py-1 rounded mt-1 block">[{hop.convertedArray}]</code>
+            </p>
+
+            <p className="text-neutral-400 mt-2 text-xs italic">
+              <strong className="text-cyan-500/70 not-italic">Void Transmission Stream:</strong> This Base {hop.targetNode.codex} sequence is serialized into a flat binary stream to be beamed via lasers across the vacuum.
+            </p>
           </div>
         ))}
+
+        {/* Final Destination */}
+        <div className="flex flex-col gap-2 bg-cyan-950/20 p-4 rounded border border-cyan-900/30">
+          <h3 className="text-cyan-400 font-bold uppercase tracking-widest border-b border-cyan-900/50 pb-1">
+            Phase {phases.hops.length + 1}: Final Destination at {phases.finalNode.id} (Base {phases.finalNode.codex})
+          </h3>
+          
+          <p className="text-neutral-400">
+            <strong className="text-cyan-500">Void Arrival:</strong> {phases.finalNode.id} captures the laser binary stream and processes it as Base {phases.finalNode.codex} values.
+          </p>
+
+          <p className="text-neutral-400">
+            <strong className="text-cyan-500">Local Decoding:</strong> {phases.finalNode.id} runs its final local decoding step, mapping the Base {phases.finalNode.codex} values back to ASCII to present to the end user.
+          </p>
+
+          <p className="text-cyan-100 mt-2 p-2 bg-cyan-900/30 rounded border border-cyan-500/30 text-center font-bold tracking-widest uppercase">
+            Payload Delivered: "{phases.payload}"
+          </p>
+        </div>
       </div>
     </div>
   );
