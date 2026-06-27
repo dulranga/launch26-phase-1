@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { useAppStore } from "../store";
 import { safeDecodeUniverseConfig } from "../engine/configDecoder";
-import SciFiCard from "./sci-fi/Card";
 import { Button } from "./ui/button";
+import { SciFiCard } from "@/ui/SciFiCard";
+import { SciFiButton } from "@/ui/SciFiButton";
 
 const BROWSER_CONFIG_KEY = "launch26.universeConfig";
 
@@ -15,7 +16,9 @@ export default function UniverseConfigLoader() {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0];
     event.target.value = "";
 
@@ -47,23 +50,26 @@ export default function UniverseConfigLoader() {
 
   return (
     <div className="mt-auto">
-      <SciFiCard className="flex flex-col gap-3">
+      <SciFiCard className="flex flex-col gap-3 p-4">
         <div className="flex items-center justify-between gap-3 border-b border-white/5 pb-2">
           <h2 className="text-cyan-400 font-bold uppercase tracking-wider text-sm">
             Config Import
           </h2>
-          <span className="text-[9px] uppercase tracking-[0.3em] text-cyan-500/60">
-            Bottom Bar
-          </span>
         </div>
 
-        <p className="text-xs text-cyan-100/70 leading-relaxed">
-          Pick a JSON file, validate it against the universe schema, and load it into the browser as the active universe config.
+        <p className="text-xs font-mono text-cyan-100/70 leading-relaxed">
+          Pick a JSON file, validate it against the universe schema, and load it
+          into the browser as the active universe config.
         </p>
 
-        <Button type="button" variant="outline" className="w-full" onClick={handlePickFile}>
+        <SciFiButton
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={handlePickFile}
+        >
           Load Config Into Browser
-        </Button>
+        </SciFiButton>
 
         <input
           ref={fileInputRef}

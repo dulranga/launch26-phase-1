@@ -75,11 +75,17 @@ function App() {
     <div className="w-screen h-screen bg-neutral-950 overflow-hidden text-cyan-100 flex flex-col md:grid md:grid-cols-[1fr_2fr_1fr] md:gap-4 md:p-4">
       {/* --- DESKTOP LEFT SIDEBAR / MOBILE CONTROLS TAB --- */}
       <div
-        className={`md:flex flex-col gap-4 overflow-y-auto custom-scrollbar pr-1 ${activeTab === "controls" ? "flex flex-1 p-4 md:p-0" : "hidden"}`}
+        className={`md:flex flex-col gap-4 overflow-hidden pr-1 ${activeTab === "controls" ? "flex flex-1 p-4 md:p-0" : "hidden"}`}
       >
-        <MessageSender />
-        <FailureSimulator />
-        <UniverseConfigLoader />
+        <div className="max-h-[40%] shrink-0 overflow-y-auto custom-scrollbar rounded-xl">
+          <MessageSender />
+        </div>
+        <div className="flex-1 overflow-y-auto custom-scrollbar rounded-xl">
+          <FailureSimulator />
+        </div>
+        <div className="max-h-[250px] shrink-0 overflow-y-auto custom-scrollbar rounded-xl">
+          <UniverseConfigLoader />
+        </div>
       </div>
 
       {/* --- CENTER: UNIVERSE VIEWER --- */}

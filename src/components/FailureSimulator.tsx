@@ -37,12 +37,12 @@ export default function FailureSimulator() {
   };
 
   return (
-    <SciFiCard theme="destructive" className="flex flex-col gap-4 p-4">
+    <SciFiCard theme="destructive" className="flex flex-col gap-4 p-4 h-full">
       <h2 className="text-red-400 font-bold uppercase tracking-wider text-sm border-b border-red-500/20 pb-2">
         Network Failure Simulation
       </h2>
 
-      <div className="flex flex-col gap-2 max-h-[33vh] overflow-y-auto pr-2 custom-scrollbar">
+      <div className="flex flex-col gap-2  overflow-y-auto pr-2 custom-scrollbar">
         {universeConfig.nodes.map((node) => {
           const isOffline = offlinePlanets.has(node.id);
           return (
