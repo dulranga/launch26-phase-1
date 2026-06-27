@@ -1,4 +1,4 @@
-# Launch-26 Phase 1
+# Team DDSL - Launch-26 Phase 1
 
 Launch-26 Phase 1 is a sci-fi transmission simulator built with React, TypeScript, and Vite. It renders a configurable universe of planetary nodes, lets you route messages between planets, and simulates failures by toggling nodes offline.
 
