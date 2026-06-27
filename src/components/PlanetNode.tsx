@@ -32,7 +32,8 @@ export default function PlanetNode({ data }: PlanetNodeProps) {
   const isOffline = offlinePlanets.has(node.id);
 
   // Compute precise scaling metrics from the node's radius
-  const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+  const clamp = (v: number, a: number, b: number) =>
+    Math.max(a, Math.min(b, v));
   const sphereSize = clamp(Math.round(node.radius_km / 40), 80, 300);
   const containerSize = sphereSize * 2.6; // Bounding size expected by React Flow dimensions
   const towerCount = Math.max(1, node.active_towers);
@@ -40,7 +41,9 @@ export default function PlanetNode({ data }: PlanetNodeProps) {
   const towerWidth = Math.max(6, Math.round(sphereSize * 0.12));
   const labelBottom = Math.round(sphereSize * 0.1);
 
-  const { planetHue, towerHue, planetRotation } = getDeterministicRandoms(node.id);
+  const { planetHue, towerHue, planetRotation } = getDeterministicRandoms(
+    node.id,
+  );
 
   const [hovered, setHovered] = useState(false);
 
@@ -81,9 +84,7 @@ export default function PlanetNode({ data }: PlanetNodeProps) {
       <Handle type="source" position={Position.Bottom} className="opacity-0" />
 
       {/* Towers Layer */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {towers}
-      </div>
+      <div className="absolute inset-0 pointer-events-none z-0">{towers}</div>
 
       {/* Planet Sphere */}
       <div
@@ -125,13 +126,17 @@ export default function PlanetNode({ data }: PlanetNodeProps) {
               left: `calc(100% + 12px)`,
               top: `50%`,
               transform: `translateY(-50%)`,
-              minWidth: Math.max(140, Math.round(sphereSize * 0.6)),
+              minWidth: Math.max(240, Math.round(sphereSize * 0.6)),
               pointerEvents: "auto",
             }}
           >
             <div className="font-bold text-sm">Atmosphere</div>
-            <div className="text-[12px] text-cyan-300">Thickness: {node.atmosphere_thickness_km} km</div>
-            <div className="text-[12px] text-cyan-300">Refraction index: {node.refraction_index}</div>
+            <div className="text-[12px] text-cyan-300">
+              Thickness: {node.atmosphere_thickness_km} km
+            </div>
+            <div className="text-[12px] text-cyan-300">
+              Refraction index: {node.refraction_index}
+            </div>
           </div>
         )}
       </div>
