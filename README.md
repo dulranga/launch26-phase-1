@@ -1,32 +1,148 @@
-# React + TypeScript + Vite
+# Team DDSL - Launch-26 Phase 1
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Launch-26 Phase 1 is a sci-fi transmission simulator built with React, TypeScript, and Vite. It renders a configurable universe of planetary nodes, lets you route messages between planets, and simulates failures by toggling nodes offline.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Visualizes the universe graph and planetary links.
+- Sends transmissions between a selected source and destination.
+- Calculates route latency based on the active universe JSON.
+- Lets you disable planets to test outage behavior.
+- Persists a loaded universe config in the browser.
 
-## React Compiler
+## Install
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Install dependencies:
 
-## Expanding the Oxlint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+2. Start the development server:
+
+```bash
+npm run dev
+```
+
+3. Build the project:
+
+```bash
+npm run build
+```
+
+## Docker
+
+The application can be built and run as a lightweight Docker container.
+
+### Build the image
+
+```bash
+docker build -t launch26 .
+```
+
+### Run the container
+
+```bash
+docker run -p 8080:80 launch26
+```
+
+The application will be available at:
+
+```text
+http://localhost:8080
+```
+
+### Using a Different Port
+
+If port `8080` is already in use, choose another host port:
+
+```bash
+docker run -p 3001:80 launch26
+```
+
+This maps:
+
+- Host port: `3001`
+- Container port: `80`
+
+The application will then be available at:
+
+```text
+http://localhost:3001
+```
+
+### Dockerfile
+
+The project uses a multi-stage Docker build:
+
+- The application is built using Node.js.
+- The production image serves the static files using Nginx.
+- The final image is optimized for size and deployment.
+
+### Build for Production
+
+To rebuild the image after making changes:
+
+```bash
+docker build -t launch26 .
+```
+
+```bash
+docker run -p 8080:80 launch26
+```
+
+## Universe JSON
+
+The app reads its configuration from `public/universe-config.json` on startup. If that file is missing, the app still opens and you can load a JSON file through the in-app Config Import panel.
+
+The JSON must follow this shape:
 
 ```json
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
+  "universe_metadata": {
+    "system_name": "Zeta-26",
+    "speed_of_light_kms": 300000,
+    "max_void_hop_distance_km": 50000000,
+    "coordinate_scale_unit_km": 100000,
+    "tower_processing_delay_ms": 7,
+    "fiber_speed_fraction": 0.67
   },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+  "nodes": [
+    {
+      "id": "Aegis",
+      "codex": 8,
+      "x": 0,
+      "y": 0,
+      "radius_km": 6371,
+      "active_towers": 8,
+      "atmosphere_thickness_km": 120,
+      "refraction_index": 1.0003
+    }
+  ]
 }
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Each node needs these fields:
+
+- `id`
+- `codex`
+- `x`
+- `y`
+- `radius_km`
+- `active_towers`
+- `atmosphere_thickness_km`
+- `refraction_index`
+
+## Adding a New Universe File
+
+1. Ensure that the configuration file matches the schema described above.
+2. Upload the configuration file through the website.
+3. The uploaded configuration will be saved in the browser's local storage and used automatically.
+
+**Note:** A default configuration file is available at `public/universe-config.json`.
+
+## Notes
+
+- The app expects valid JSON, not comments or trailing commas.
+- If a config fails validation, the import panel shows the reason.
+- Offline planets only affect routing and simulation; they do not delete data from the config.

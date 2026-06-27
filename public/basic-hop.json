@@ -1,0 +1,62 @@
+{
+    "universe_metadata": {
+        "system_name": "Aurora-Net",
+        "speed_of_light_kms": 300000.0,
+        "max_void_hop_distance_km": 500.0,
+        "coordinate_scale_unit_km": 100000.0,
+        "tower_processing_delay_ms": 7.0,
+        "fiber_speed_fraction": 0.67
+    },
+    "nodes": [
+        {
+            "id": "Atlas",
+            "codex": 8,
+            "x": 0,
+            "y": 0,
+            "radius_km": 6371,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 120,
+            "refraction_index": 1.0003
+        },
+        {
+            "id": "Nova",
+            "codex": 5,
+            "x": 140,
+            "y": 90,
+            "radius_km": 4000,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 80,
+            "refraction_index": 1.04
+        },
+        {
+            "id": "Titan",
+            "codex": 16,
+            "x": 260,
+            "y": 180,
+            "radius_km": 7000,
+            "active_towers": 12,
+            "atmosphere_thickness_km": 180,
+            "refraction_index": 1.12
+        },
+        {
+            "id": "Helios",
+            "codex": 14,
+            "x": 500,
+            "y": 120,
+            "radius_km": 2000,
+            "active_towers": 6,
+            "atmosphere_thickness_km": 40,
+            "refraction_index": 1.01
+        },
+        {
+            "id": "Eden",
+            "codex": 12,
+            "x": 650,
+            "y": 300,
+            "radius_km": 5000,
+            "active_towers": 10,
+            "atmosphere_thickness_km": 300,
+            "refraction_index": 1.22
+        }
+    ]
+}

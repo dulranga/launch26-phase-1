@@ -24,8 +24,13 @@ interface AppState {
   messagePayload: string;
   sourcePlanet: string | null;
   targetPlanet: string | null;
+  selectedPlanet: string | null;
   activeRoute: RouteResult;
   isAnimating: boolean;
+  /** Incremented each time user fires a transmission — used to re-key animations */
+  transmissionId: number;
+  /** Route that has fully completed transmission (dot finished travelling) */
+  transmittedRoute: RouteResult | null;
 
   // Actions
   setUniverseConfig: (config: UniverseConfig) => void;
@@ -33,8 +38,11 @@ interface AppState {
   setMessagePayload: (payload: string) => void;
   setSourcePlanet: (planetId: string) => void;
   setTargetPlanet: (planetId: string) => void;
+  setSelectedPlanet: (planetId: string | null) => void;
   setActiveRoute: (route: RouteResult) => void;
   setIsAnimating: (animating: boolean) => void;
+  setTransmittedRoute: (route: RouteResult | null) => void;
+  bumpTransmissionId: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -43,6 +51,7 @@ export const useAppStore = create<AppState>((set) => ({
   messagePayload: "",
   sourcePlanet: null,
   targetPlanet: null,
+  selectedPlanet: null,
   activeRoute: {
     path: [],
     hops: [],
@@ -50,8 +59,27 @@ export const useAppStore = create<AppState>((set) => ({
     status: "idle",
   },
   isAnimating: false,
+  transmissionId: 0,
+  transmittedRoute: null,
 
-  setUniverseConfig: (config) => set({ universeConfig: config }),
+  setUniverseConfig: (config) =>
+    set({
+      universeConfig: config,
+      offlinePlanets: new Set(),
+      messagePayload: "",
+      sourcePlanet: null,
+      targetPlanet: null,
+      selectedPlanet: null,
+      activeRoute: {
+        path: [],
+        hops: [],
+        totalLatency: 0,
+        status: "idle",
+      },
+      isAnimating: false,
+      transmittedRoute: null,
+      transmissionId: 0,
+    }),
   togglePlanetStatus: (planetId) =>
     set((state) => {
       const newOffline = new Set(state.offlinePlanets);
@@ -65,6 +93,9 @@ export const useAppStore = create<AppState>((set) => ({
   setMessagePayload: (payload) => set({ messagePayload: payload }),
   setSourcePlanet: (sourcePlanet) => set({ sourcePlanet }),
   setTargetPlanet: (targetPlanet) => set({ targetPlanet }),
+  setSelectedPlanet: (selectedPlanet) => set({ selectedPlanet }),
   setActiveRoute: (activeRoute) => set({ activeRoute }),
   setIsAnimating: (isAnimating) => set({ isAnimating }),
+  setTransmittedRoute: (transmittedRoute) => set({ transmittedRoute }),
+  bumpTransmissionId: () => set((state) => ({ transmissionId: state.transmissionId + 1 })),
 }));

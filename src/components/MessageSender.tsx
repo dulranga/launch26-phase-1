@@ -1,5 +1,15 @@
 import { useAppStore } from "../store";
 import { findRoute } from "../engine/routing";
+import { SciFiCard } from "../ui/SciFiCard";
+import { SciFiButton } from "../ui/SciFiButton";
+import {
+  SciFiSelect,
+  SciFiSelectTrigger,
+  SciFiSelectValue,
+  SciFiSelectContent,
+  SciFiSelectItem,
+} from "../ui/SciFiSelect";
+import { SciFiTextarea } from "../ui/SciFiTextarea";
 
 export default function MessageSender() {
   const universeConfig = useAppStore((state) => state.universeConfig);
@@ -13,6 +23,8 @@ export default function MessageSender() {
   const setMessagePayload = useAppStore((state) => state.setMessagePayload);
   const setActiveRoute = useAppStore((state) => state.setActiveRoute);
   const setIsAnimating = useAppStore((state) => state.setIsAnimating);
+  const setTransmittedRoute = useAppStore((state) => state.setTransmittedRoute);
+  const bumpTransmissionId = useAppStore((state) => state.bumpTransmissionId);
 
   if (!universeConfig) return null;
 
@@ -27,13 +39,17 @@ export default function MessageSender() {
       offlinePlanets,
     );
     setActiveRoute(route);
+    setTransmittedRoute(null); // clear previous completed route
 
     if (route.status === "success") {
+      bumpTransmissionId();
       setIsAnimating(true);
-      // Stop animation after a short delay based on path length
+      // 800ms per hop for the comet to travel, then mark as transmitted
+      const duration = route.path.length * 800;
       setTimeout(() => {
         setIsAnimating(false);
-      }, route.path.length * 1000); // 1s per hop animation
+        setTransmittedRoute(route);
+      }, duration);
     }
   };
 
@@ -42,69 +58,70 @@ export default function MessageSender() {
   );
 
   return (
-    <div className="bg-neutral-900/50 backdrop-blur-md p-6 rounded-xl border border-white/5 flex flex-col gap-4">
-      <h2 className="text-cyan-400 font-bold uppercase tracking-wider text-sm border-b border-white/5 pb-2">
+    <SciFiCard className="flex flex-col gap-4 p-4">
+      <h2 className="text-[var(--color-sci-fi-cyan)] font-bold uppercase tracking-wider text-sm border-b border-[var(--color-sci-fi-cyan)]/20 pb-2">
         Transmission Uplink
       </h2>
 
       <div className="flex gap-4">
-        <div className="flex-1 flex flex-col gap-1">
-          <label className="text-[10px] text-cyan-500/70 uppercase font-bold tracking-wider">
+        <div className="flex-1 min-w-0 flex flex-col gap-1">
+          <label className="text-[9px] text-[var(--color-sci-fi-cyan)]/70 uppercase font-bold tracking-wider leading-none">
             Source
           </label>
-          <select
-            value={sourcePlanet || ""}
-            onChange={(e) => setSourcePlanet(e.target.value)}
-            className="bg-neutral-950 border border-white/10 rounded p-2 text-sm text-cyan-100 focus:outline-none focus:border-cyan-500/50"
-          >
-            <option value="">Select Origin...</option>
-            {availablePlanets.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.id}
-              </option>
-            ))}
-          </select>
+          <SciFiSelect value={sourcePlanet || ""} onValueChange={(val) => setSourcePlanet(val || "")}>
+            <SciFiSelectTrigger>
+              <SciFiSelectValue placeholder="Source" />
+            </SciFiSelectTrigger>
+            <SciFiSelectContent>
+              {availablePlanets.map((p) => (
+                <SciFiSelectItem key={p.id} value={p.id}>
+                  {p.id}
+                </SciFiSelectItem>
+              ))}
+            </SciFiSelectContent>
+          </SciFiSelect>
         </div>
 
-        <div className="flex-1 flex flex-col gap-1">
-          <label className="text-[10px] text-cyan-500/70 uppercase font-bold tracking-wider">
+        <div className="flex-1 min-w-0 flex flex-col gap-1">
+          <label className="text-[9px] text-[var(--color-sci-fi-cyan)]/70 uppercase font-bold tracking-wider leading-none">
             Destination
           </label>
-          <select
-            value={targetPlanet || ""}
-            onChange={(e) => setTargetPlanet(e.target.value)}
-            className="bg-neutral-950 border border-white/10 rounded p-2 text-sm text-cyan-100 focus:outline-none focus:border-cyan-500/50"
-          >
-            <option value="">Select Target...</option>
-            {availablePlanets.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.id}
-              </option>
-            ))}
-          </select>
+          <SciFiSelect value={targetPlanet || ""} onValueChange={(val) => setTargetPlanet(val || "")}>
+            <SciFiSelectTrigger>
+              <SciFiSelectValue placeholder="Destination" />
+            </SciFiSelectTrigger>
+            <SciFiSelectContent>
+              {availablePlanets.map((p) => (
+                <SciFiSelectItem key={p.id} value={p.id}>
+                  {p.id}
+                </SciFiSelectItem>
+              ))}
+            </SciFiSelectContent>
+          </SciFiSelect>
         </div>
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-[10px] text-cyan-500/70 uppercase font-bold tracking-wider">
+        <label className="text-[10px] text-[var(--color-sci-fi-cyan)]/70 uppercase font-bold tracking-wider">
           Payload
         </label>
-        <textarea
+        <SciFiTextarea
           value={messagePayload}
           onChange={(e) => setMessagePayload(e.target.value)}
           placeholder="ENTER MESSAGE..."
           rows={3}
-          className="bg-neutral-950 border border-white/10 rounded p-2 text-sm text-cyan-100 font-mono focus:outline-none focus:border-cyan-500/50 resize-none"
+          className="p-3"
         />
       </div>
 
-      <button
-        onClick={handleSend}
-        disabled={!sourcePlanet || !targetPlanet || !messagePayload}
-        className="mt-2 w-full py-3 rounded bg-cyan-900/40 hover:bg-cyan-800/60 border border-cyan-500/30 text-cyan-400 font-bold tracking-widest text-sm uppercase transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        [ Initialize Transmission ]
-      </button>
-    </div>
+      <div className="pt-2">
+        <SciFiButton
+          onClick={handleSend}
+          disabled={!sourcePlanet || !targetPlanet || !messagePayload}
+        >
+          [ Initialize Transmission ]
+        </SciFiButton>
+      </div>
+    </SciFiCard>
   );
 }

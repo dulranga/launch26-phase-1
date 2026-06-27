@@ -1,0 +1,42 @@
+{
+    "universe_metadata": {
+        "system_name": "Dead-Zone",
+        "speed_of_light_kms": 300000.0,
+        "max_void_hop_distance_km": 1000.0,
+        "coordinate_scale_unit_km": 100000.0,
+        "tower_processing_delay_ms": 7.0,
+        "fiber_speed_fraction": 0.67
+    },
+    "nodes": [
+        {
+            "id": "Core",
+            "codex": 8,
+            "x": 0,
+            "y": 0,
+            "radius_km": 6000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 100,
+            "refraction_index": 1.01
+        },
+        {
+            "id": "Relay",
+            "codex": 5,
+            "x": 300,
+            "y": 100,
+            "radius_km": 4000,
+            "active_towers": 6,
+            "atmosphere_thickness_km": 50,
+            "refraction_index": 1.03
+        },
+        {
+            "id": "Ghost",
+            "codex": 16,
+            "x": 2000,
+            "y": 2000,
+            "radius_km": 3000,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 40,
+            "refraction_index": 1.02
+        }
+    ]
+}
