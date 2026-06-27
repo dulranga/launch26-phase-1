@@ -24,6 +24,7 @@ interface AppState {
   messagePayload: string;
   sourcePlanet: string | null;
   targetPlanet: string | null;
+  selectedPlanet: string | null;
   activeRoute: RouteResult;
   isAnimating: boolean;
 
@@ -33,6 +34,7 @@ interface AppState {
   setMessagePayload: (payload: string) => void;
   setSourcePlanet: (planetId: string) => void;
   setTargetPlanet: (planetId: string) => void;
+  setSelectedPlanet: (planetId: string | null) => void;
   setActiveRoute: (route: RouteResult) => void;
   setIsAnimating: (animating: boolean) => void;
 }
@@ -65,6 +67,7 @@ export const useAppStore = create<AppState>((set) => ({
   setMessagePayload: (payload) => set({ messagePayload: payload }),
   setSourcePlanet: (sourcePlanet) => set({ sourcePlanet }),
   setTargetPlanet: (targetPlanet) => set({ targetPlanet }),
+  setSelectedPlanet: (selectedPlanet) => set({ selectedPlanet }),
   setActiveRoute: (activeRoute) => set({ activeRoute }),
   setIsAnimating: (isAnimating) => set({ isAnimating }),
 }));

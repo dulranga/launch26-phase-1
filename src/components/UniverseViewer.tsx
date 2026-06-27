@@ -9,6 +9,7 @@ import "reactflow/dist/style.css";
 import { useAppStore } from "../store";
 import PlanetNode from "./PlanetNode";
 import { calculateHopLatency } from "../engine/latency";
+import { useState } from "react";
 
 const nodeTypes = {
   planet: PlanetNode,
@@ -19,6 +20,8 @@ export default function UniverseViewer() {
   const activeRoute = useAppStore((state) => state.activeRoute);
   const offlinePlanets = useAppStore((state) => state.offlinePlanets);
   const isAnimating = useAppStore((state) => state.isAnimating);
+
+  const [rfInstance, setRfInstance] = useState<any | null>(null);
 
   const nodes: Node[] = useMemo(() => {
     if (!universeConfig) return [];
@@ -103,6 +106,39 @@ export default function UniverseViewer() {
         edges={edges}
         nodeTypes={nodeTypes}
         fitView
+        onInit={(instance) => setRfInstance(instance)}
+        onNodeClick={(_, node) => {
+          const setSelected = useAppStore.getState().setSelectedPlanet;
+          setSelected(node.id as string);
+          if (!rfInstance || !node.position) return;
+
+          // Prefer using the rendered node info from React Flow to compute exact center
+          try {
+            const rendered = rfInstance.getNode(node.id as string);
+            if (rendered) {
+              // React Flow exposes positionAbsolute which is the node's top-left in graph coords
+              const px = (rendered.positionAbsolute?.x ?? rendered.position?.x ?? node.position.x) + (rendered.width ?? 0) / 2;
+              const py = (rendered.positionAbsolute?.y ?? rendered.position?.y ?? node.position.y) + (rendered.height ?? 0) / 2;
+              if (typeof rfInstance.setCenter === "function") {
+                rfInstance.setCenter(px, py, { zoom: 1.6, duration: 800 });
+                return;
+              }
+              rfInstance.setViewport({ x: px, y: py, zoom: 1.6 }, { duration: 800 });
+              return;
+            }
+          } catch (e) {
+            // ignore and fall back
+          }
+
+          // Fallback: simple center on node.position
+          const fallbackX = node.position.x;
+          const fallbackY = node.position.y;
+          if (typeof rfInstance.setCenter === "function") {
+            rfInstance.setCenter(fallbackX, fallbackY, { zoom: 1.6, duration: 800 });
+            return;
+          }
+          rfInstance.setViewport({ x: fallbackX, y: fallbackY, zoom: 1.6 }, { duration: 800 });
+        }}
         minZoom={0.01}
         maxZoom={5}
         proOptions={{ hideAttribution: true }}

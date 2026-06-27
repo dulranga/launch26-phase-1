@@ -46,12 +46,12 @@ export default function CodexPanel() {
   if (!phases) return null;
 
   return (
-    <div className="bg-neutral-900/50 backdrop-blur-md p-6 rounded-xl border border-white/5 flex flex-col gap-4 mt-4 h-full max-h-[600px] overflow-y-auto custom-scrollbar">
-      <h2 className="text-cyan-400 font-bold uppercase tracking-wider text-sm border-b border-white/5 pb-2 sticky top-0 bg-neutral-900/90 backdrop-blur-md z-10">
+    <div className="bg-neutral-900/50 backdrop-blur-md p-6 rounded-xl border border-white/5 flex flex-col gap-4 mt-4 h-full max-h-[600px] overflow-hidden">
+      <h2 className="flex-shrink-0 text-cyan-400 font-bold uppercase tracking-wider text-sm border-b border-white/5 pb-2 bg-neutral-900/95">
         Multi-Hop Transmission Log
       </h2>
 
-      <div className="flex flex-col gap-6 text-sm">
+      <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar pr-1 flex flex-col gap-6 text-sm">
         {phases.hops.map((hop, index) => (
           <div key={index} className="flex flex-col gap-2 bg-neutral-950/50 p-4 rounded border border-white/5">
             <h3 className="text-cyan-200 font-bold uppercase tracking-widest border-b border-white/5 pb-1">

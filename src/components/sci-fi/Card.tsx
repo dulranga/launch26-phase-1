@@ -1,5 +1,5 @@
 import { Card } from "../ui/card";
-import border from "@/assets/sci-fi/border.png";
+
 
 function SciFiCard({
   children,
