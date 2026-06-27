@@ -4,8 +4,11 @@ import { safeDecodeUniverseConfig } from "./engine/configDecoder";
 import UniverseViewer from "./components/UniverseViewer";
 import MessageSender from "./components/MessageSender";
 import FailureSimulator from "./components/FailureSimulator";
+import UniverseConfigLoader from "./components/UniverseConfigLoader";
 import MetricsPanel from "./components/MetricsPanel";
 import CodexPanel from "./components/CodexPanel";
+
+const BROWSER_CONFIG_KEY = "launch26.universeConfig";
 
 function App() {
   const setUniverseConfig = useAppStore((state) => state.setUniverseConfig);
@@ -17,6 +20,23 @@ function App() {
   );
 
   useEffect(() => {
+    const browserConfigText = localStorage.getItem(BROWSER_CONFIG_KEY);
+
+    if (browserConfigText) {
+      try {
+        const browserConfig = JSON.parse(browserConfigText);
+        const browserResult = safeDecodeUniverseConfig(browserConfig);
+
+        if (browserResult.success) {
+          setUniverseConfig(browserResult.data);
+          return;
+        }
+        localStorage.removeItem(BROWSER_CONFIG_KEY);
+      } catch {
+        localStorage.removeItem(BROWSER_CONFIG_KEY);
+      }
+    }
+
     fetch("/universe-config.json")
       .then((res) => {
         if (!res.ok) throw new Error("Could not find /universe-config.json");
@@ -59,6 +79,7 @@ function App() {
       >
         <MessageSender />
         <FailureSimulator />
+        <UniverseConfigLoader />
       </div>
 
       {/* --- CENTER: UNIVERSE VIEWER --- */}
