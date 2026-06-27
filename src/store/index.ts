@@ -45,6 +45,7 @@ export const useAppStore = create<AppState>((set) => ({
   messagePayload: "",
   sourcePlanet: null,
   targetPlanet: null,
+  selectedPlanet: null,
   activeRoute: {
     path: [],
     hops: [],

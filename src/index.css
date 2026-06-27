@@ -51,6 +51,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: "Zen Dots", sans-serif;
   --font-mono: "Spline Sans Mono", sans-serif;
+  --color-sci-fi-cyan: #00F0FF;
 }
 :root {
   --background: oklch(0.145 0 0);
@@ -147,5 +148,20 @@
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(34, 211, 238, 0.5);
+  }
+  
+  @keyframes sci-fi-draw {
+    from {
+      stroke-dashoffset: 1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .animate-sci-fi-draw {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: sci-fi-draw 0.8s ease-out forwards;
   }
 }
