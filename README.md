@@ -30,6 +30,67 @@ npm run dev
 npm run build
 ```
 
+## Docker
+
+The application can be built and run as a lightweight Docker container.
+
+### Build the image
+
+```bash
+docker build -t launch26 .
+```
+
+### Run the container
+
+```bash
+docker run -p 8080:80 launch26
+```
+
+The application will be available at:
+
+```text
+http://localhost:8080
+```
+
+### Using a Different Port
+
+If port `8080` is already in use, choose another host port:
+
+```bash
+docker run -p 3001:80 launch26
+```
+
+This maps:
+
+- Host port: `3001`
+- Container port: `80`
+
+The application will then be available at:
+
+```text
+http://localhost:3001
+```
+
+### Dockerfile
+
+The project uses a multi-stage Docker build:
+
+- The application is built using Node.js.
+- The production image serves the static files using Nginx.
+- The final image is optimized for size and deployment.
+
+### Build for Production
+
+To rebuild the image after making changes:
+
+```bash
+docker build -t launch26 .
+```
+
+```bash
+docker run -p 8080:80 launch26
+```
+
 ## Universe JSON
 
 The app reads its configuration from `public/universe-config.json` on startup. If that file is missing, the app still opens and you can load a JSON file through the in-app Config Import panel.
@@ -79,7 +140,6 @@ Each node needs these fields:
 3. The uploaded configuration will be saved in the browser's local storage and used automatically.
 
 **Note:** A default configuration file is available at `public/universe-config.json`.
-
 
 ## Notes
 
