@@ -74,10 +74,10 @@ Each node needs these fields:
 
 ## Adding a new universe file
 
-1. Create or edit `public/universe-config.json`.
+1. There is a default config file in `public/universe-config.json`.
 2. Make sure the JSON matches the schema above.
 3. Refresh the app, or use the Config Import panel to upload a JSON file from your machine.
-4. The loaded config is saved in browser storage so it is reused on the next visit.
+4. The loaded config is saved in browser storage and will be used.
 
 ## Notes
 
