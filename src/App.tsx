@@ -4,8 +4,11 @@ import { safeDecodeUniverseConfig } from './engine/configDecoder';
 import UniverseViewer from './components/UniverseViewer';
 import MessageSender from './components/MessageSender';
 import FailureSimulator from './components/FailureSimulator';
+import UniverseConfigLoader from './components/UniverseConfigLoader';
 import MetricsPanel from './components/MetricsPanel';
 import CodexPanel from './components/CodexPanel';
+
+const BROWSER_CONFIG_KEY = 'launch26.universeConfig';
 
 function App() {
   const setUniverseConfig = useAppStore((state) => state.setUniverseConfig);
@@ -15,6 +18,23 @@ function App() {
   const [activeTab, setActiveTab] = useState<'controls' | 'metrics'>('controls');
 
   useEffect(() => {
+    const browserConfigText = localStorage.getItem(BROWSER_CONFIG_KEY);
+
+    if (browserConfigText) {
+      try {
+        const browserConfig = JSON.parse(browserConfigText);
+        const browserResult = safeDecodeUniverseConfig(browserConfig);
+
+        if (browserResult.success) {
+          setUniverseConfig(browserResult.data);
+          return;
+        }
+        localStorage.removeItem(BROWSER_CONFIG_KEY);
+      } catch {
+        localStorage.removeItem(BROWSER_CONFIG_KEY);
+      }
+    }
+
     fetch('/universe-config.json')
       .then((res) => {
         if (!res.ok) throw new Error('Could not find /universe-config.json');
@@ -28,9 +48,8 @@ function App() {
           setError(`Invalid Configuration: ${result.error.message}`);
         }
       })
-      .catch((err) => {
-        // Fallback for when the file isn't there yet (user will add dummy json later)
-        setError('Waiting for universe-config.json...');
+      .catch(() => {
+        setError('Using placeholder public/universe-config.json...');
       });
   }, [setUniverseConfig]);
 
@@ -39,7 +58,7 @@ function App() {
       <div className="flex flex-col items-center justify-center w-screen h-screen bg-neutral-950 text-cyan-500 font-mono p-8 text-center">
         <h1 className="text-xl font-bold mb-4 uppercase tracking-widest text-red-500">System Initialization Halted</h1>
         <p className="max-w-2xl text-sm opacity-80">{error}</p>
-        <p className="mt-4 text-xs opacity-50">Please ensure valid universe-config.json is placed in the public directory.</p>
+        <p className="mt-4 text-xs opacity-50">Using the public/universe-config.json placeholder if no browser-loaded config exists.</p>
       </div>
     );
   }
@@ -51,6 +70,7 @@ function App() {
       <div className={`md:flex flex-col gap-4 overflow-y-auto custom-scrollbar pr-1 ${activeTab === 'controls' ? 'flex flex-1 p-4 md:p-0' : 'hidden'}`}>
         <MessageSender />
         <FailureSimulator />
+        <UniverseConfigLoader />
       </div>
 
       {/* --- CENTER: UNIVERSE VIEWER --- */}

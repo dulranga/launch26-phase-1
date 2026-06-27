@@ -45,6 +45,7 @@ export const useAppStore = create<AppState>((set) => ({
   messagePayload: "",
   sourcePlanet: null,
   targetPlanet: null,
+  selectedPlanet: null,
   activeRoute: {
     path: [],
     hops: [],
@@ -53,7 +54,22 @@ export const useAppStore = create<AppState>((set) => ({
   },
   isAnimating: false,
 
-  setUniverseConfig: (config) => set({ universeConfig: config }),
+  setUniverseConfig: (config) =>
+    set({
+      universeConfig: config,
+      offlinePlanets: new Set(),
+      messagePayload: "",
+      sourcePlanet: null,
+      targetPlanet: null,
+      selectedPlanet: null,
+      activeRoute: {
+        path: [],
+        hops: [],
+        totalLatency: 0,
+        status: "idle",
+      },
+      isAnimating: false,
+    }),
   togglePlanetStatus: (planetId) =>
     set((state) => {
       const newOffline = new Set(state.offlinePlanets);
