@@ -110,9 +110,9 @@ export default function UniverseViewer() {
                 ? "#00F0FF"
                 : isOfflineNode
                   ? "#450a0a"
-                  : "#17aeb8",
+                  : "#22d3ee",
               strokeWidth: isRouteEdge ? 4 : 1,
-              opacity: isOfflineNode ? 0.15 : 0.85,
+              opacity: isOfflineNode ? 0.15 : isRouteEdge ? 0.9 : 0.35,
             },
           });
         }

@@ -1,0 +1,262 @@
+{
+    "universe_metadata": {
+        "system_name": "Quadrant-25",
+        "speed_of_light_kms": 300000.0,
+        "max_void_hop_distance_km": 1000.0,
+        "coordinate_scale_unit_km": 100.0,
+        "tower_processing_delay_ms": 7.0,
+        "fiber_speed_fraction": 0.67
+    },
+    "nodes": [
+        {
+            "id": "Aegis",
+            "codex": 8,
+            "x": 0,
+            "y": 0,
+            "radius_km": 6371,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 120,
+            "refraction_index": 1.0003
+        },
+        {
+            "id": "Boreas",
+            "codex": 5,
+            "x": 380,
+            "y": 50,
+            "radius_km": 3400,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 80,
+            "refraction_index": 1.04
+        },
+        {
+            "id": "Caelum",
+            "codex": 14,
+            "x": 760,
+            "y": 0,
+            "radius_km": 58000,
+            "active_towers": 16,
+            "atmosphere_thickness_km": 500,
+            "refraction_index": 1.32
+        },
+        {
+            "id": "Dawn",
+            "codex": 6,
+            "x": 1140,
+            "y": 60,
+            "radius_km": 1800,
+            "active_towers": 6,
+            "atmosphere_thickness_km": 25,
+            "refraction_index": 1.01
+        },
+        {
+            "id": "Elysium",
+            "codex": 10,
+            "x": 1520,
+            "y": 20,
+            "radius_km": 6100,
+            "active_towers": 12,
+            "atmosphere_thickness_km": 250,
+            "refraction_index": 1.18
+        },
+        {
+            "id": "Fenix",
+            "codex": 16,
+            "x": 50,
+            "y": 400,
+            "radius_km": 1300,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 15,
+            "refraction_index": 1.005
+        },
+        {
+            "id": "Gaia",
+            "codex": 12,
+            "x": 400,
+            "y": 420,
+            "radius_km": 7000,
+            "active_towers": 10,
+            "atmosphere_thickness_km": 180,
+            "refraction_index": 1.09
+        },
+        {
+            "id": "Helios",
+            "codex": 18,
+            "x": 760,
+            "y": 390,
+            "radius_km": 12000,
+            "active_towers": 18,
+            "atmosphere_thickness_km": 600,
+            "refraction_index": 1.41
+        },
+        {
+            "id": "Iris",
+            "codex": 7,
+            "x": 1150,
+            "y": 430,
+            "radius_km": 2400,
+            "active_towers": 6,
+            "atmosphere_thickness_km": 45,
+            "refraction_index": 1.02
+        },
+        {
+            "id": "Juno",
+            "codex": 9,
+            "x": 1510,
+            "y": 390,
+            "radius_km": 5000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 140,
+            "refraction_index": 1.07
+        },
+        {
+            "id": "Kronos",
+            "codex": 20,
+            "x": 20,
+            "y": 800,
+            "radius_km": 65000,
+            "active_towers": 20,
+            "atmosphere_thickness_km": 1200,
+            "refraction_index": 1.75
+        },
+        {
+            "id": "Luna",
+            "codex": 4,
+            "x": 390,
+            "y": 770,
+            "radius_km": 1700,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 10,
+            "refraction_index": 1.001
+        },
+        {
+            "id": "Mirage",
+            "codex": 13,
+            "x": 780,
+            "y": 820,
+            "radius_km": 9000,
+            "active_towers": 14,
+            "atmosphere_thickness_km": 900,
+            "refraction_index": 1.65
+        },
+        {
+            "id": "Nyx",
+            "codex": 11,
+            "x": 1130,
+            "y": 780,
+            "radius_km": 4300,
+            "active_towers": 6,
+            "atmosphere_thickness_km": 90,
+            "refraction_index": 1.03
+        },
+        {
+            "id": "Orion",
+            "codex": 15,
+            "x": 1540,
+            "y": 810,
+            "radius_km": 10000,
+            "active_towers": 12,
+            "atmosphere_thickness_km": 400,
+            "refraction_index": 1.25
+        },
+        {
+            "id": "Phoenix",
+            "codex": 17,
+            "x": 60,
+            "y": 1180,
+            "radius_km": 3000,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 60,
+            "refraction_index": 1.015
+        },
+        {
+            "id": "Quasar",
+            "codex": 19,
+            "x": 410,
+            "y": 1160,
+            "radius_km": 50000,
+            "active_towers": 20,
+            "atmosphere_thickness_km": 2500,
+            "refraction_index": 2.2
+        },
+        {
+            "id": "Rhea",
+            "codex": 3,
+            "x": 760,
+            "y": 1200,
+            "radius_km": 1200,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 5,
+            "refraction_index": 1.0001
+        },
+        {
+            "id": "Solace",
+            "codex": 8,
+            "x": 1160,
+            "y": 1160,
+            "radius_km": 5400,
+            "active_towers": 8,
+            "atmosphere_thickness_km": 160,
+            "refraction_index": 1.06
+        },
+        {
+            "id": "Titan",
+            "codex": 16,
+            "x": 1530,
+            "y": 1210,
+            "radius_km": 70000,
+            "active_towers": 20,
+            "atmosphere_thickness_km": 3000,
+            "refraction_index": 2.6
+        },
+        {
+            "id": "Umbra",
+            "codex": 5,
+            "x": 10,
+            "y": 1560,
+            "radius_km": 3500,
+            "active_towers": 6,
+            "atmosphere_thickness_km": 70,
+            "refraction_index": 1.02
+        },
+        {
+            "id": "Vega",
+            "codex": 14,
+            "x": 420,
+            "y": 1530,
+            "radius_km": 8200,
+            "active_towers": 10,
+            "atmosphere_thickness_km": 250,
+            "refraction_index": 1.12
+        },
+        {
+            "id": "Warden",
+            "codex": 6,
+            "x": 790,
+            "y": 1590,
+            "radius_km": 20000,
+            "active_towers": 16,
+            "atmosphere_thickness_km": 1500,
+            "refraction_index": 1.85
+        },
+        {
+            "id": "Xenon",
+            "codex": 9,
+            "x": 1170,
+            "y": 1540,
+            "radius_km": 2600,
+            "active_towers": 4,
+            "atmosphere_thickness_km": 30,
+            "refraction_index": 1.008
+        },
+        {
+            "id": "Zenith",
+            "codex": 12,
+            "x": 1540,
+            "y": 1580,
+            "radius_km": 9500,
+            "active_towers": 12,
+            "atmosphere_thickness_km": 500,
+            "refraction_index": 1.28
+        }
+    ]
+}
