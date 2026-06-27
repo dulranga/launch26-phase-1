@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useAppStore } from "../store";
 import { safeDecodeUniverseConfig } from "../engine/configDecoder";
-import { Button } from "./ui/button";
 import { SciFiCard } from "@/ui/SciFiCard";
 import { SciFiButton } from "@/ui/SciFiButton";
 

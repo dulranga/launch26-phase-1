@@ -27,6 +27,10 @@ interface AppState {
   selectedPlanet: string | null;
   activeRoute: RouteResult;
   isAnimating: boolean;
+  /** Incremented each time user fires a transmission — used to re-key animations */
+  transmissionId: number;
+  /** Route that has fully completed transmission (dot finished travelling) */
+  transmittedRoute: RouteResult | null;
 
   // Actions
   setUniverseConfig: (config: UniverseConfig) => void;
@@ -37,6 +41,8 @@ interface AppState {
   setSelectedPlanet: (planetId: string | null) => void;
   setActiveRoute: (route: RouteResult) => void;
   setIsAnimating: (animating: boolean) => void;
+  setTransmittedRoute: (route: RouteResult | null) => void;
+  bumpTransmissionId: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -53,6 +59,8 @@ export const useAppStore = create<AppState>((set) => ({
     status: "idle",
   },
   isAnimating: false,
+  transmissionId: 0,
+  transmittedRoute: null,
 
   setUniverseConfig: (config) =>
     set({
@@ -69,6 +77,8 @@ export const useAppStore = create<AppState>((set) => ({
         status: "idle",
       },
       isAnimating: false,
+      transmittedRoute: null,
+      transmissionId: 0,
     }),
   togglePlanetStatus: (planetId) =>
     set((state) => {
@@ -86,4 +96,6 @@ export const useAppStore = create<AppState>((set) => ({
   setSelectedPlanet: (selectedPlanet) => set({ selectedPlanet }),
   setActiveRoute: (activeRoute) => set({ activeRoute }),
   setIsAnimating: (isAnimating) => set({ isAnimating }),
+  setTransmittedRoute: (transmittedRoute) => set({ transmittedRoute }),
+  bumpTransmissionId: () => set((state) => ({ transmissionId: state.transmissionId + 1 })),
 }));

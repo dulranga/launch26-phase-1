@@ -79,9 +79,29 @@ export default function PlanetNode({ data }: PlanetNodeProps) {
       className="relative w-full h-full group"
       style={{ width: `${containerSize}px`, height: `${containerSize}px` }}
     >
-      {/* Target Handles for ReactFlow */}
-      <Handle type="target" position={Position.Top} className="opacity-0" />
-      <Handle type="source" position={Position.Bottom} className="opacity-0" />
+      {/* Centered handles — placed at 50%/50% so all edges connect to the planet center */}
+      <Handle
+        type="source"
+        position={Position.Left}
+        style={{ left: '50%', top: '50%', transform: 'none', opacity: 0, pointerEvents: 'none' }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ left: '50%', top: '50%', transform: 'none', opacity: 0, pointerEvents: 'none' }}
+      />
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="target-left"
+        style={{ left: '50%', top: '50%', transform: 'none', opacity: 0, pointerEvents: 'none' }}
+      />
+      <Handle
+        type="target"
+        position={Position.Right}
+        id="target-right"
+        style={{ left: '50%', top: '50%', transform: 'none', opacity: 0, pointerEvents: 'none' }}
+      />
 
       {/* Towers Layer */}
       <div className="absolute inset-0 pointer-events-none z-0">{towers}</div>

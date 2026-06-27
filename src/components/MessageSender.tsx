@@ -23,6 +23,8 @@ export default function MessageSender() {
   const setMessagePayload = useAppStore((state) => state.setMessagePayload);
   const setActiveRoute = useAppStore((state) => state.setActiveRoute);
   const setIsAnimating = useAppStore((state) => state.setIsAnimating);
+  const setTransmittedRoute = useAppStore((state) => state.setTransmittedRoute);
+  const bumpTransmissionId = useAppStore((state) => state.bumpTransmissionId);
 
   if (!universeConfig) return null;
 
@@ -37,13 +39,17 @@ export default function MessageSender() {
       offlinePlanets,
     );
     setActiveRoute(route);
+    setTransmittedRoute(null); // clear previous completed route
 
     if (route.status === "success") {
+      bumpTransmissionId();
       setIsAnimating(true);
-      // Stop animation after a short delay based on path length
+      // 800ms per hop for the comet to travel, then mark as transmitted
+      const duration = route.path.length * 800;
       setTimeout(() => {
         setIsAnimating(false);
-      }, route.path.length * 1000); // 1s per hop animation
+        setTransmittedRoute(route);
+      }, duration);
     }
   };
 
