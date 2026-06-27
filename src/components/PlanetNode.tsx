@@ -120,10 +120,13 @@ export default function PlanetNode({ data }: PlanetNodeProps) {
         {/* Hover popup for atmosphere details */}
         {hovered && (
           <div
-            className="absolute left-1/2 -translate-x-1/2 text-xs text-cyan-100 bg-neutral-900/80 border border-white/10 rounded-md p-2 shadow-lg z-30"
+            className="absolute text-xs text-cyan-100 bg-neutral-900/80 border border-white/10 rounded-md p-2 shadow-lg z-30"
             style={{
-              top: `calc(50% - ${Math.round(sphereSize / 2)}px - 10px)`,
+              left: `calc(100% + 12px)`,
+              top: `50%`,
+              transform: `translateY(-50%)`,
               minWidth: Math.max(140, Math.round(sphereSize * 0.6)),
+              pointerEvents: "auto",
             }}
           >
             <div className="font-bold text-sm">Atmosphere</div>
